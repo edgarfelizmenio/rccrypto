@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rubik's Cube Encryption Prototype</title>
+    <script type="text/javascript">
+    document.getElementById('show').onclick = function () {
+      plainInput = document.getElementById('plaininput').value;
+
+      if (plainInput) {
+        var plainimage = new Image();
+        plainimage.src = plainInput;
+        plainimage.onload = function() {
+          var plaindisplay = document.createElement("canvas");
+          plaindisplay.width = this.width;
+          plaindisplay.height = this.height;
+
+          var context = plaindisplay.getContext("2d");
+          context.drawImage(this, 0, 0);
+
+          var dataURL = plaindisplay.toDataURL("image/png");
+
+          return plaindisplay.toDataURL();
+        };
+      }
+    };
+    </script>
+  </head>
+  <body>
+    <label>Enter plain image
+      <input type="file" id="plaininput"/>
+    </label>
+    <input type="button" value="show image" id="show"/>
+
+  </body>
+
+
+</html>
