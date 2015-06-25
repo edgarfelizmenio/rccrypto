@@ -64,7 +64,7 @@ def validate(matrix, bits, height, width):
 def createRandomVector(minValue, maxValue, length):
     return [random.randint(minValue, maxValue) for i in range(length)]
 
-def encrypt(image, maxIter = 1):
+def encryptdecrypt(image, maxIter = 1):
     bits = image.bits
     height = image.size[0]
     width = image.size[1]
@@ -130,10 +130,11 @@ def encrypt(image, maxIter = 1):
         image.show()
         print validate(matrix, height, width, bits)
 
+    #reverse the process
     iterations = 0
     while iterations < maxIter:
 
-        #reverse the process
+
 
         KrRot = Kr[:-1:]
         matrix = transpose(matrix)
@@ -168,8 +169,8 @@ def encrypt(image, maxIter = 1):
 
     #newImage = Image.new(image.mode, image.size)
     #newImage.putdata(convertToImageData(matrix))
-    image.putdata(convertToImageData(matrix, isTuple))
-    return image, Kr, Kc, maxIter
+    #image.putdata(convertToImageData(matrix, isTuple))
+    #return image, Kr, Kc, maxIter
 
 def decrypt(cypher, Kr, Kc, maxIter):
     height = cypher.size[0]
@@ -216,21 +217,37 @@ def decrypt(cypher, Kr, Kc, maxIter):
     return cypher
 
 
-jpgfile = Image.open("images.jpg")
+def main(args):
+    filename = ""
+    maxIters = 1
+    if len(args) >= 1:
+        filename = args[0]
+    if len(args) >= 2:
+        maxIters = int(args[1])
 
-print jpgfile.bits, jpgfile.size, jpgfile.format
-print jpgfile
-print jpgfile.info
+    print "filename: ", filename
+    jpgfile = Image.open(filename)
 
-#jpgfile.show()
+    print jpgfile.bits, jpgfile.size, jpgfile.format
+    print jpgfile
+    print jpgfile.info
 
-print "encrypting"
-cypher, Kr, Kc, maxIter = encrypt(jpgfile, 20)
-cypher.save("cypher.jpg")
+    #jpgfile.show()
 
-#cypherfile = Image.open("cypher.jpg")
-#cypherfile.show()
+    print "encrypting"
+    encryptdecrypt(jpgfile, 1)
+    #cypher, Kr, Kc, maxIter = encryptdecrypt(jpgfile, 20)
 
-#decrypted = decrypt(cypherfile, Kr, Kc, maxIter)
-#decrypted.show()
-#decrypted.save("decrypted.jpg")
+    #cypher.save("cypher.jpg")
+
+    #cypherfile = Image.open("cypher.jpg")
+    #cypherfile.show()
+
+    #decrypted = decrypt(cypherfile, Kr, Kc, maxIter)
+    #decrypted.show()
+    #decrypted.save("decrypted.jpg")
+
+if __name__ == "__main__":
+    args = sys.argv[1:]
+    print args
+    main(args)
