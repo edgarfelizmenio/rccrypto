@@ -133,9 +133,6 @@ def encryptdecrypt(image, maxIter = 1):
     #reverse the process
     iterations = 0
     while iterations < maxIter:
-
-
-
         KrRot = Kr[:-1:]
         matrix = transpose(matrix)
         XOR(matrix, Kr, KrRot)
@@ -227,6 +224,11 @@ def main(args):
 
     print "filename: ", filename
     jpgfile = Image.open(filename)
+    #print jpgfile.depth
+    print "bits = ", jpgfile.bits
+    print "bands =", jpgfile.getbands()
+    print "mode =", jpgfile.mode
+
 
     print jpgfile.bits, jpgfile.size, jpgfile.format
     print jpgfile
